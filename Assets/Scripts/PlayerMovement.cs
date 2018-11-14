@@ -16,11 +16,10 @@ public class PlayerMovement : MonoBehaviour {
 	private float trueJump;
 
 	private bool isGrounded() {
-		Debug.Log(player.velocity.y);
 		return player.velocity.y < 0.005 && player.velocity.y > -0.005;
 	}
 
-	private void HandleMovement() {
+	private void handleMovement() {
 		Vector2 movement = new Vector2(0, player.velocity.y);
 
 		if (Input.GetKey(KeyCode.D)) {
@@ -41,7 +40,7 @@ public class PlayerMovement : MonoBehaviour {
 		player.velocity = movement;
 	}
 
-	private void HandleAnimations() {
+	private void handleAnimations() {
 		movingRight = player.velocity.x > 0;
 		movingLeft = player.velocity.x < 0;
 
@@ -73,7 +72,7 @@ public class PlayerMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		HandleMovement();
-		HandleAnimations();
+		handleMovement();
+		handleAnimations();
 	}
 }
