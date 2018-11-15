@@ -7,19 +7,17 @@ public class PauseUI : MonoBehaviour {
 	private bool paused;
 
 	// Handles when the user clicks "Resume"
-	void Resume() {
+	public void Resume() {
 		changeState();
 	}
 
 	// Handles when the user clicks "Exit"
-	void Exit() {
-
+	public void Exit() {
+		Application.Quit();
 	}
 
 	private void changeState() {
-		Debug.Log("paused is " + paused);
 		paused = !paused;
-		Debug.Log("paused is " + paused);
 
 		if (paused) {
 			// Activate the pause menu
