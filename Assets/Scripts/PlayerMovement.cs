@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour {
 	// Global vars
 	public GameObject sprite;
 	private Animator animator;
+	public bool movementEnabled = true;
 	bool movingRight;
 	bool movingLeft;
 
@@ -22,18 +23,20 @@ public class PlayerMovement : MonoBehaviour {
 	private void handleMovement() {
 		Vector2 movement = new Vector2(0, player.velocity.y);
 
-		if (Input.GetKey(KeyCode.D)) {
-			movement.x += trueSpeed;
-		}
+		if (movementEnabled) {
+			if (Input.GetKey(KeyCode.D)) {
+				movement.x += trueSpeed;
+			}
 
-		if (Input.GetKey(KeyCode.A)) {
-			movement.x += -trueSpeed;
-		}
+			if (Input.GetKey(KeyCode.A)) {
+				movement.x += -trueSpeed;
+			}
 
-		if (Input.GetKeyDown(KeyCode.Space)) {
-			// Don't jump unless the player is on the ground
-			if (isGrounded()) {
-				movement.y += trueJump;
+			if (Input.GetKeyDown(KeyCode.Space)) {
+				// Don't jump unless the player is on the ground
+				if (isGrounded()) {
+					movement.y += trueJump;
+				}
 			}
 		}
 
