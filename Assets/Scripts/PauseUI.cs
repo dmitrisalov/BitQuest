@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PauseUI : MonoBehaviour {
 	public GameObject pauseMenu;
+    public GameObject hud;
 	private bool paused;
 
 	// Handles when the user clicks "Resume"
@@ -22,12 +23,14 @@ public class PauseUI : MonoBehaviour {
 		if (paused) {
 			// Activate the pause menu
 			pauseMenu.SetActive(true);
+            hud.SetActive(false);
 			// Pause the time
 			Time.timeScale = 0;
 		}
 		else {
 			// Deactivate the pause menu
 			pauseMenu.SetActive(false);
+            hud.SetActive(true);
 			// Resume the time
 			Time.timeScale = 1;
 		}

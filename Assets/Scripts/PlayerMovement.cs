@@ -3,24 +3,46 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
-	// Global vars
 	public GameObject sprite;
-	private Animator animator;
 	public bool movementEnabled = true;
-	bool movingRight;
-	bool movingLeft;
+    public float movementSpeed;
+    public float jumpStrength;
 
+    private Animator animator;
 	private Rigidbody2D player;
-	public float movementSpeed;
 	private float trueSpeed;
-	public float jumpStrength;
 	private float trueJump;
+    private bool movingRight;
+	private bool movingLeft;
 
-	private bool isGrounded() {
+    /*
+     * Knocks back the player for a certain duration and force.
+     *
+     * duration The length of time for which the force is applied
+     * force The force that is applied in the y direction
+     * dir The initial direction of the player 
+     *
+     * Return 0 to suppress compiler errors
+     */
+    public IEnumerator Knockback(float duration, float force, Vector3 dir) {
+        float timer = 0;
+
+        while (timer < duration) {
+            timer += Time.deltaTime;
+
+            // Add the knockback direction, maintaining the z position
+            Vector3 knockDir = new Vector3(dir.x * -100, dir.y * force, dir.z);
+            player.AddForce(knockDir);
+        }
+
+        yield return 0;
+    }
+
+	private bool IsGrounded() {
 		return player.velocity.y < 0.005 && player.velocity.y > -0.005;
 	}
 
-	private void handleMovement() {
+	private void HandleMovement() {
 		Vector2 movement = new Vector2(0, player.velocity.y);
 
 		if (movementEnabled) {
@@ -34,7 +56,7 @@ public class PlayerMovement : MonoBehaviour {
 
 			if (Input.GetKeyDown(KeyCode.Space)) {
 				// Don't jump unless the player is on the ground
-				if (isGrounded()) {
+				if (IsGrounded()) {
 					movement.y += trueJump;
 				}
 			}
@@ -43,11 +65,11 @@ public class PlayerMovement : MonoBehaviour {
 		player.velocity = movement;
 	}
 
-	private void handleAnimations() {
+	private void HandleAnimations() {
 		movingRight = player.velocity.x > 0;
 		movingLeft = player.velocity.x < 0;
 
-		animator.SetBool("IsGrounded", isGrounded());
+		animator.SetBool("IsGrounded", IsGrounded());
 
 		if ((movingRight && movingLeft) || (!movingRight && !movingLeft)) {
 			// Player should be stopped
@@ -75,7 +97,7 @@ public class PlayerMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		handleMovement();
-		handleAnimations();
+		HandleMovement();
+		HandleAnimations();
 	}
 }
