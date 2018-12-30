@@ -7,13 +7,11 @@ public class Spikes : MonoBehaviour {
     public int damageAmount;
 
     private Player playerScript;
-    private PlayerMovement movementScript;
     private bool playerColliding;
 
 	// Use this for initialization
 	void Start () {
 		playerScript = player.GetComponent<Player>();
-        movementScript = player.GetComponent<PlayerMovement>();
 	}
 	
     // Called when the player steps on the 
